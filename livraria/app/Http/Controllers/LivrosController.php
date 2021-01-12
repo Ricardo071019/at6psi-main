@@ -89,6 +89,7 @@ public function destroy (Request $request){
 
 	$livro->delete();
 
-	return redirect()->route('livros.index');
+	return redirect()->route('livros.index')->with('mensagem','Livro eliminado!');
+
 }
 }
