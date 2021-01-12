@@ -40,6 +40,17 @@ route::get('/autores/create', 'App\http\Controllers\AutoresController@create')->
 
 route::post('/autores', 'App\http\Controllers\AutoresController@store')->name('autores.store');
 
+Route::get('/livros/{id}/edit', 'App\Http\Controllers\LivrosController@edit')
+->name('livros.edit');
+
+Route::patch('/livros', 'App\Http\Controllers\LivrosController@update')
+->name('livros.update');
+
+Route::get('/livros/{id}/delete', 'App\Http\Controllers\LivrosController@delete')
+->name('livros.delete');
+
+Route::delete('/livros', 'App\Http\Controllers\LivrosController@destroy')
+->name('livros.destroy');
 
 
 

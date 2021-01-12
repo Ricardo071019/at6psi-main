@@ -32,3 +32,4 @@ Idioma:{{$livro->idioma}}
 	sem editora definido
 </div>
 @endif
+<a href="{{route('livros.edit',['id'=>$livro->id_livro]) }}">Editar</a>
