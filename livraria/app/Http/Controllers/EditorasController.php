@@ -23,4 +23,19 @@ public function show (Request $request){
 	
 	return view ('editoras.show',['editora'=>$editora]);
 }
+public function create (){
+		return view ('editoras.create');
+}
+public function store(Request $request){
+		$novoEditora = $request->validate([
+			'nome'=>['required','min:3', 'max:20'],
+			'morada'=>['required','min:3','max:255'],
+			'observacoes'=>['required','min:3']
+			
+		]);
+
+		$editora = Editora::create($novoEditora);
+
+		return redirect()->route('editoras.show',['id'=>$editora->id_editora]);
+	}
 }

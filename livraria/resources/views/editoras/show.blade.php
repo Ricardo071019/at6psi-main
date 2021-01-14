@@ -1,3 +1,4 @@
 ID:{{$editora->id_editora}}<br>
 Nome:{{$editora->nome}}<br>
-Morada:{{$editora->morada}}
+Morada:{{$editora->morada}}<br>
+Observações:{{$editora->observacoes}}<br>
