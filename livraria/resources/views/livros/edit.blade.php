@@ -36,6 +36,7 @@ Observações:<textarea name="observacoes"></textarea><br>
 
 Sinopse:<textarea name="sinopse">{{$livro->sinopse}}</textarea><br><br>	
 
+Genero(s)
 <select name="id_genero">
 		@foreach($generos as $genero)
 		<option value="{{$genero->id_genero}}"

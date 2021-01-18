@@ -27,7 +27,10 @@ class AutoresController extends Controller
 	}
 
 	public function create (){
-		return view ('autores.create');
+		$generos = Genero::all();
+		$autores = Autor::all();
+		return view ('autores.create',['generos' =>$generos,
+			'autores'=>$autores]);
 	}
 
 	public function store(Request $request){
@@ -37,10 +40,58 @@ class AutoresController extends Controller
 			'data_nascimento'=>['nullable','date'],
 			'fotografia'=>['nullable']
 		]);
-
-		$autor = Autor::create($novoAutor);
+		$autores = $request->id_autor;
+		$autor= Autor::create($novoAutor);
+		$autor->autores()->attach($autores);
 
 		return redirect()->route('autores.show',['id'=>$autor->id_autor]);
 	}
+	public function edit (Request $request){
+$idAutor = $request->id;
+$generos = Genero::all();
+$autores= Autor::all();
+$autor = Autor::where('id_autor',$idAutor)->with('autores')->first();
+$autoresLivro = [];
+//obter id autor dos autores deste livro
+foreach($autor->autores as $autor){
+	$autoresLivro[] = $autor->id_autor;
+}
+return view('autores.edit',['livro'=>$livro,
+'generos'=>$generos,
+'autores' =>$autores,
+'autoresLivro'=>$autoresLivro]);
+}
+public function update (Request $request){
+$idAutor = $request->id;
+$autor = Autor::findOrFail($idAutor);
+
+$atualizarAutor = $request->validate([                 
+	'nome'=>['required','min:3', 'max:20'],
+			'nacionalidade'=>['required','min:3','max:255'],
+			'data_nascimento'=>['nullable','date'],
+			'fotografia'=>['nullable']
+		]);
+
+$autores=$request->id_autor;
+$autor->update($atualizarAutor);
+$autor->autores()->sync($autores);
+return redirect()->route('autores.show',[
+'id'=>$autor->id_autor]);
+
+}
+public function delete (Request $request){
+		$idAutor = $request->id;
+		$autor=Autor::where('id_autor',$idAutor)->first();
+		return view ('autores.delete',['autor'=>$autor]);
+}
+public function destroy (Request $request){
+	$idAutor = $request->id;
+
+	$autor = Autor::findOrFail($idAutor);
+	$autor->delete();
+
+	return redirect()->route('autores.index')->with('mensagem','Autor eliminado!');
+
+}
 
 }

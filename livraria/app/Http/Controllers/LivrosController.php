@@ -107,7 +107,7 @@ public function destroy (Request $request){
 	$idLivro = $request->id;
 
 	$livro = Livro::findOrFail($idLivro);
-	$autoresLivro = Livro::findOrFail($id_livro)->autores;
+	$autoresLivro = Livro::findOrFail($idLivro)->autores;
 	$livro->autores()->detach($autoresLivro);
 
 	$livro->delete();

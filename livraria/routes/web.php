@@ -52,5 +52,17 @@ Route::get('/livros/{id}/delete', 'App\Http\Controllers\LivrosController@delete'
 Route::delete('/livros', 'App\Http\Controllers\LivrosController@destroy')
 ->name('livros.destroy');
 
+Route::get('/autores/{id}/edit', 'App\Http\Controllers\AutoresController@edit')
+->name('autores.edit');
+
+Route::patch('/autores', 'App\Http\Controllers\AutoresController@update')
+->name('autores.update');
+
+Route::get('/autores/{id}/delete', 'App\Http\Controllers\AutoresController@delete')
+->name('autores.delete');
+
+Route::delete('/autores', 'App\Http\Controllers\AutoresController@destroy')
+->name('autores.destroy');
+
 
 
