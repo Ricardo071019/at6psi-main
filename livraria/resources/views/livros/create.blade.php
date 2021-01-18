@@ -51,8 +51,19 @@
 	Deverá indicar uma sinopse
 	@endif
 
-	<input type="submit" name="enviar"><br>
-	
+	<input type="submit" name="enviar"><br><br>
+	<select name="id_genero">
+		@foreach($generos as $genero)
+		<option value="{{$genero->id_genero}}">{{$genero->designacao}}</option>
+		@endforeach
+	</select><br><br>
+
+Autor(es)
+<select name="id_autor" multiple="multiple">
+		@foreach($autores as $autor)
+		<option value="{{$autor->id_autor}}">{{$autor->nome}}</option>
+		@endforeach
+	</select>
 
 
 </form>
