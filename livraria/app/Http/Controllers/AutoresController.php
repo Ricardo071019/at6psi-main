@@ -46,52 +46,46 @@ class AutoresController extends Controller
 
 		return redirect()->route('autores.show',['id'=>$autor->id_autor]);
 	}
+
 	public function edit (Request $request){
-$idAutor = $request->id;
-$generos = Genero::all();
-$autores= Autor::all();
-$autor = Autor::where('id_autor',$idAutor)->with('autores')->first();
-$autoresLivro = [];
-//obter id autor dos autores deste livro
-foreach($autor->autores as $autor){
-	$autoresLivro[] = $autor->id_autor;
-}
-return view('autores.edit',['livro'=>$livro,
-'generos'=>$generos,
-'autores' =>$autores,
-'autoresLivro'=>$autoresLivro]);
-}
-public function update (Request $request){
-$idAutor = $request->id;
-$autor = Autor::findOrFail($idAutor);
+		$idAutor = $request->id;
+		$autor = Autor::where('id_autor',$idAutor)->first();
+		return view('autores.edit',['autor'=>$autor]);
+	}
+		
 
-$atualizarAutor = $request->validate([                 
-	'nome'=>['required','min:3', 'max:20'],
-			'nacionalidade'=>['required','min:3','max:255'],
-			'data_nascimento'=>['nullable','date'],
-			'fotografia'=>['nullable']
-		]);
 
-$autores=$request->id_autor;
-$autor->update($atualizarAutor);
-$autor->autores()->sync($autores);
-return redirect()->route('autores.show',[
-'id'=>$autor->id_autor]);
+	public function update (Request $request){
+		$idAutor = $request->id;
+		$autor = Autor::findOrFail($idAutor);
 
-}
-public function delete (Request $request){
+		$atualizarAutor = $request->validate([                 
+			'nome'=>['required','min:3', 'max:20'],
+					'nacionalidade'=>['required','min:3','max:255'],
+					'data_nascimento'=>['nullable','date'],
+					'fotografia'=>['nullable']
+				]);
+		$autor->update($atualizarAutor);
+
+		return redirect()->route('autores.show',[
+		'id'=>$autor->id_autor]);
+
+	}
+
+	public function delete (Request $request){
 		$idAutor = $request->id;
 		$autor=Autor::where('id_autor',$idAutor)->first();
 		return view ('autores.delete',['autor'=>$autor]);
-}
-public function destroy (Request $request){
-	$idAutor = $request->id;
+	}
 
-	$autor = Autor::findOrFail($idAutor);
-	$autor->delete();
+	public function destroy (Request $request){
+		$idAutor = $request->id;
 
-	return redirect()->route('autores.index')->with('mensagem','Autor eliminado!');
+		$autor = Autor::findOrFail($idAutor);
+		$autor->delete();
 
-}
+		return redirect()->route('autores.index')->with('mensagem','Autor eliminado!');
+
+	}
 
 }

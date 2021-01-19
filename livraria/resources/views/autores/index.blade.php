@@ -9,5 +9,4 @@
 <div class="alert alert-danger" role="alert">
 	{{session('mensagem')}}
 </div>
-	
 	@endif
